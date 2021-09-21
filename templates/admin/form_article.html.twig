@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BackOffice{% endblock %}
+
+{% block body %}
+
+<h1 class="display-4 text-center my-4">
+{% if editMode %}
+BACKOFFICE | MODIFICATION de l'article
+
+{% else %}
+    BACKOFFICE | Création d'un nouvel article
+
+{% endif %}
+
+</h1>
+
+
+{{ form_start(formEdit) }}
+
+{{ form_row(formEdit.title, {'attr': {'placeholder': 'Titre de l\'article'} }) }}
+{{ form_row(formEdit.category) }}
+{{ form_row(formEdit.content, {'attr': {'placeholder': 'Contenu de l\'article'} }) }}
+{# {{ form_row(formEdit.imageFile, {'attr': {'placeholder': 'URL de l\'article'} }) }} #}
+{{ form_row(formEdit.imageFile) }}
+
+<button type="submit" class="btn btn-primary mb-4 mt-2"> 
+
+{% if editMode %}
+
+Enregistrer les modifications
+
+{% else %}
+    Ajouter un Article
+</button>
+
+{% endif %}
+
+{{ form_end(formEdit) }}
+
+{% endblock %}

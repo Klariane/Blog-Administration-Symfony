@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BackOffice{% endblock %}
+
+{% block body %}
+
+{% for message in app.flashes('success') %}
+
+<div class="text-center alert alert-success mt-2"> {{ message }} </div>
+    
+{% endfor %}
+
+<table class="table table-bordered text-center">
+<tr>
+{% for data in colonnes %}
+{% if data != 'id' %}
+
+        <th> {{ data }} </th>
+{% endif %}
+    
+{% endfor %}
+<th>Catégorie</th>
+<th>Edit</th>
+<th>Supp</th>
+
+
+</tr>
+ <a href="{{ path('admin_new_article') }}"><button class="btn btn-primary mb-4 mt-2 mb-2">Ajouter un nouvel Article</button></a>
+{% for data in articles %}
+
+
+
+
+<tr>
+    <td>{{ data.title }}</td>
+    <td> {{ data.content | raw }} </td>
+   
+
+    <td>{{ data.createdAt | date("d/m/Y à H:i:s") }}</td>
+<td>
+    {# <td><img src=" {{ asset('images/articles/' ~data.image) }}" alt="Image de l'article" class="img-fluid"> </td> #}
+    {# la premiere facon sert a recuperer et afficher les images qui ont été upload sur la plateforme #}
+
+    {# la deuxieme facon sert a afficher les images créees grâce aux fixtures #}
+    {% if data.image starts with 'http' %}
+    <img src="{{ data.image }}" alt="article de limage" style="width: 150px">
+    
+    {% else %}
+   <img src=" {{ asset('images/articles/' ~data.image) }}" alt="Image de l'article" class="img-fluid"> 
+    {% endif %}
+
+    {# ici, si l'url de limage commence par "http", alors c'est une image tirée de Faker: il faut l'afficher avec data.image #}
+    {# Sinon, le nom de limage ne commence pas par "http" , alors c'est une image stockée sur l'application (images/articles/): il faut lafficher avec asset #}
+
+</td>
+    <td>{{ data.updatedAt | date("d/m/Y à H:i:s") }}</td>
+
+    <td> {{ data.category.title | raw }} </td>
+     <td><a href="{{ path('admin_edit_article', {'id': data.id }) }}" class="text-dark">
+                <i class = "fas fa-edit fa-1x"></i>
+                </a>
+    </td>
+     <td><a href="{{ path('admin_delete_article', {'id': data.id }) }}" class="text-dark">
+                <i class = "fas fa-trash-alt fa-1x"></i>
+                </a>
+    </td>  
+
+</tr>
+    
+{% endfor %}
+
+</table>
+
+{% endblock %}

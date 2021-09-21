@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Profil{% endblock %}
+
+{% block body %}
+{% for message in app.flashes('success') %}
+<div class="alert alert-success text-center mt-2">
+{{ message }}
+</div>    
+{% endfor %}
+
+<h1 class="text-center my-3">Mon profil</h1>
+{{ form_start(userForm) }}
+{# {{ app.user.email }}
+{{ app.user.prenom}}
+{{ app.user.nom }}
+{{ app.user.ville }} #}
+
+{{ form_row(userForm.email) }}
+{{ form_row(userForm.prenom) }}
+{{ form_row(userForm.nom) }}
+{{ form_row(userForm.adresse) }}
+{{ form_row(userForm.ville) }}
+{{ form_row(userForm.codePostal) }}
+
+<button type="submit" class="btn btn-primary mt-2">Sauvegarder les modifications</button>
+
+{# app.user permer d'acceder aux informations de l'utilisateur connecté #}
+
+<a href="{{ path('password_edit') }}" class="btn btn-primary mt-3">Modifier votre mot de passe</a>
+{{ form_end(userForm) }}
+{% endblock %}

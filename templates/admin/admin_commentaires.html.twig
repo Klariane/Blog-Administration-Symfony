@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BackOffice{% endblock %}
+
+{% block body %}
+
+{% for message in app.flashes('success') %}
+
+<div class="text-center alert alert-success mt-2"> {{ message }} </div>
+    
+{% endfor %}
+
+
+<table class="table table-bordered text-center">
+<tr>
+{% for data in colonnesCommentaires %}
+{% if data != 'id' %}
+ <th> {{ data }} </th>
+{% endif %}
+    
+{% endfor %}
+<th>article_id</th>
+<th>Edit</th>
+<th>Supp</th>
+
+
+</tr>
+
+{% for data in commentaires %}
+
+<tr>
+    <td>{{ data.author }}</td>
+    <td> {{ data.content | raw }} </td>
+     <td>{{ data.createdAt | date("d/m/Y à H:i:s") }}</td>
+<td>
+    
+     <td><a href="{{ path('admin_edit_commentaire', {'id': data.id }) }}" class="text-dark">
+                <i class = "fas fa-edit fa-1x"></i>
+                </a>
+    </td>
+     <td><a href="{{ path('admin_delete_commentaire', {'id': data.id }) }}" class="text-dark">
+                <i class = "fas fa-trash-alt fa-1x"></i>
+                </a>
+    </td>  
+
+</tr>
+    
+{% endfor %}
+
+</table>
+
+{% endblock %}

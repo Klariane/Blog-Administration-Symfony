@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BackOffice{% endblock %}
+
+{% block body %}
+
+{% for message in app.flashes('success') %}
+
+<div class="text-center alert alert-success mt-2"> {{ message }} </div>
+    
+{% endfor %}
+
+<a href="{{ path('admin_new_categorie') }}"><button class="btn btn-primary mb-4 mt-2 mb-2">Ajouter une nouvelle Catégorie</button></a>
+
+<table class="table table-bordered text-center">
+<tr>
+{% for data in colonnesCategories %}
+{% if data != 'id' %}
+
+        <th> {{ data }} </th>
+{% endif %}
+    
+{% endfor %}
+<th>Edit</th>
+<th>Supp</th>
+
+
+</tr>
+
+{% for data in categories %}
+
+<tr>
+    <td>{{ data.title }}</td>
+    <td> {{ data.description | raw }} </td>
+    
+     <td><a href="{{ path('admin_edit_categorie', {'id': data.id }) }}" class="text-dark">
+                <i class = "fas fa-edit fa-1x"></i>
+                </a>
+    </td>
+     <td><a href="{{ path('admin_delete_categorie', {'id': data.id }) }}" class="text-dark">
+                <i class = "fas fa-trash-alt fa-1x"></i>
+                </a>
+    </td>  
+
+</tr>
+    
+{% endfor %}
+
+</table>
+
+{% endblock %}

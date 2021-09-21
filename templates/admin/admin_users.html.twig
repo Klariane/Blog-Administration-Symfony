@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BackOffice{% endblock %}
+
+{% block body %}
+
+{% for message in app.flashes('success') %}
+
+<div class="text-center alert alert-success mt-2"> {{ message }} </div>
+    
+{% endfor %}
+
+<a href="{{ path('admin_new_user') }}"><button class="btn btn-primary mb-4 mt-2 mb-2">Ajouter un nouvel utilisateur</button></a>
+
+<table class="table table-bordered text-center">
+<tr>
+{% for data in colonnesUsers %}
+{% if data != 'id' %}
+
+        <th> {{ data }} </th>
+{% endif %}
+    
+{% endfor %}
+<th>Edit</th>
+<th>Supp</th>
+
+
+</tr>
+
+{% for data in users %}
+
+<tr>
+
+
+    
+    <td> {{ data.email }} </td>
+    {% for dataRole in data.roles %}
+        <td> {{ dataRole  }} </td>
+    {% endfor %}
+    <td> {{ data.password }} </td>
+    <td> {{ data.prenom  }} </td>
+    <td> {{ data.nom  }} </td>
+    <td> {{ data.adresse }} </td>
+    <td> {{ data.ville  }} </td>
+    <td> {{ data.codePostal  }} </td>
+
+    
+     <td><a href="{{ path('admin_edit_user', {'id': data.id }) }}" class="text-dark">
+                <i class = "fas fa-edit fa-1x"></i>
+                </a>
+    </td>
+     <td><a href="{{ path('admin_delete_user', {'id': data.id }) }}" class="text-dark">
+                <i class = "fas fa-trash-alt fa-1x"></i>
+                </a>
+    </td>  
+
+</tr>
+    
+{% endfor %}
+
+</table>
+
+{% endblock %}

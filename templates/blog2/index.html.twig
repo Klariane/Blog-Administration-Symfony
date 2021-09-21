@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Articles{% endblock %}
+
+{% block body %}
+
+{{ form_start(searchForm) }}
+
+{{ form_row(searchForm.Recherche) }} {#afficher la barre de recherche#}
+
+<button type="submit" class="btn btn-primary mt-2">Rechercher</button>
+
+{{ form_end(searchForm) }}
+
+
+<section class="articles">
+
+{% for article in articles %}
+
+
+<article class="col-md-3 mx-auto text-center border border-dark mb-3 p-3 mt-3 mr-1"
+> 
+<h2>{{ article.title }}</h2>
+
+<div class="metadata">Ecrit le {{ article.createdAt | date('d/m/Y à H:i:s') }} dans la catégorie {{ article.category.title }}</div>
+
+<div class="content"> <img src="{{ asset('images/articles/' ~ article.image) }}" alt="Image de l'article" class="img-fluid"> {{ article.content |slice(0, 200) | raw }}...<br>
+<a href="{{ path("blog2_show", {"id": article.id}) }}" class="btn btn-primary">Lire la suite</a>
+</div>
+</article>
+
+{% endfor %}
+
+</section>
+
+{% endblock %}

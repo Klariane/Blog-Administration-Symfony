@@ -1,0 +1,68 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ article.title }} {% endblock %}
+
+{% block body %}
+
+<section class="articles">
+
+<article class="col-md-6 mx-auto text-center border border-dark mb-3 p-3 mt-3 mr-1"
+> 
+<h2>{{ article.title }}</h2>
+
+<div class="metadata">Ecrit le {{ article.createdAt | date('d/m/Y à H:i:s') }} dans la catégorie {{ article.category.title }}</div>
+
+<div class="content"> <img src="{{ asset('images/articles/' ~ article.image) }}" alt="Image de l'article" class="img-fluid"> {{ article.content | raw }}</div>
+
+
+
+{% if is_granted('ROLE_ADMIN') %}
+<hr>
+<a href="{{ path("blog2_edit", {"id": article.id}) }}" class="btn btn-primary">Editer</a>
+
+<a href="{{ path("blog2_delete", {"id": article.id}) }}" class="btn btn-danger mx-auto">Supprimer</a>
+{% endif %}
+</article>
+</section>
+
+<h2 class="text-center mx-auto m-3">Commentaires</h2>
+
+<section class="col-md-10 mx-auto" id="commentaire">
+{#on récupère le tableau qui contient tous les commentaires de cet article: article.comments#}
+{% for comment in article.comments %}
+    <div class="comment">
+       <div class="row">
+            <div class ="col-md-3">
+                {{ comment.author }} (<small>{{ comment.createdAt | date('d/m/Y à H:i:s') }}</small>)
+             </div>
+
+             <div class="col-md-9">
+             {{ comment.content | raw }} {# | raw filtre permettant dinterpreter les balises <p> contenue dans le content #}
+             </div>
+        </div>
+    </div>
+{% endfor %}
+
+<div class="mt-3">
+{% if app.user %}
+
+<h2 class="text-center">Laisser un commentaire</h2>
+
+{{ form_start(commentForm) }}
+
+{{ form_row(commentForm.content, {'attr' : {'placeholder' : 'Votre commentaire'}}) }}
+
+<button type="submit" class="btn btn-primary mt-2"> Envoyer </button>
+
+
+{{ form_end(commentForm) }}
+
+{% else %}
+
+    <a class="text-center" href="{{ path("app_login") }}">Veuillez vous connecter pour laisser un commentaire</a>
+
+{% endif %}
+</div>
+</section>
+
+{% endblock %}

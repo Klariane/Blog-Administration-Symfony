@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BackOffice{% endblock %}
+
+{% block body %}
+
+<h1 class="display-4 text-center my-4">
+{% if editMode %}
+BACKOFFICE | Modification du commentaire
+
+{% else %}
+BACKOFFICE | Création d'un nouveau commentaire
+
+{% endif %}
+
+</h1>
+
+
+{{ form_start(formCommentaireEdit) }}
+
+{{ form_row(formCommentaireEdit.author, {'attr': {'placeholder': 'Auteur du commentaire '} }) }}
+{{ form_row(formCommentaireEdit.content, {'attr': {'placeholder': 'Contenu du commentaire '} }) }}
+
+<button type="submit" class="btn btn-primary mb-4 mt-2"> 
+
+{% if editMode %}
+
+Enregistrer les modifications
+
+{% else %}
+    Ajouter un Commentaire
+{% endif %}
+</button>
+
+{{ form_end(formCommentaireEdit) }}
+
+
+
+
+
+
+{% endblock %}

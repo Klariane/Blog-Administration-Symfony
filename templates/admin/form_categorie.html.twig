@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BackOffice{% endblock %}
+
+{% block body %}
+
+<h1 class="display-4 text-center my-4">
+{% if editMode %}
+BACKOFFICE | MODIFICATION de la catégorie
+
+{% else %}
+    BACKOFFICE | Création d'une nouvelle catégorie
+
+{% endif %}
+
+</h1>
+
+{{ form_start(formCategorieEdit) }}
+
+{{ form_row(formCategorieEdit.title, {'attr': {'placeholder': 'Titre de l\'article'} }) }}
+{{ form_row(formCategorieEdit.description) }}
+
+
+<button type="submit" class="btn btn-primary mb-4 mt-2"> 
+
+{% if editMode %}
+
+Enregistrer les modifications
+
+{% else %}
+    Ajouter une Catégorie
+
+{% endif %}
+
+</button>
+
+{{ form_end(formCategorieEdit) }}
+
+{% endblock %}
